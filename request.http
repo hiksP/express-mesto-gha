@@ -1,10 +1,12 @@
-GET http://localhost:3000/users/42
+GET http://localhost:3000/users
 
 ###
 
-POST http://localhost:3000/
+POST http://localhost:3000/users
 Content-type: application/json
 
 {
-  "body": "афк"
+  "name": "Петр",
+  "about": "никто",
+  "avatar": "https://sun9-50.userapi.com/impg/eZREyXt3FwTPQUjXKPo1wFJ5LVw24oYdvF9PRw/7ctNFBbaw28.jpg?size=1125x1379&quality=96&sign=7b3857a32f41fa8482190a3188805f88&type=album"
 }

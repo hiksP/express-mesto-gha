@@ -1,8 +1,18 @@
-const card = require('../models/card');
+const mongoose = require('mongoose');
+const { User } = require('../models/user');
 
-module.exports.createCard = (req, res) => {
-  const { name, link, userId } = req.body;
+exports.getUsers = async (req, res) => {
+  const users = await User.find({});
 
-  card.create({ name, link, owner: userId })
-    .then(card => res.send({ data: card }));
-};
+  res.send(users);
+}
+
+exports.getUserById = (req, res) => {
+  res.send(User.find((item) => item._id === req.params.id));
+}
+
+exports.createUser = async (req, res) => {
+  const user =  await User.create(req.body);
+
+  res.send(user);
+}

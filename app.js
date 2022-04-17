@@ -9,8 +9,6 @@ const PUBLIC_FOLDER = path.join(__dirname, 'public');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb');
-
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
@@ -20,6 +18,12 @@ app.use(express.static(PUBLIC_FOLDER));
 
 app.use(routes);
 
-app.listen(PORT, () => {
-  console.log('etwas')
-});
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/mestodb');
+
+  app.listen(PORT, () => {
+    console.log('etwas')
+  });
+}
+
+main();

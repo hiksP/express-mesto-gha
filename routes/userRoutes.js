@@ -1,17 +1,12 @@
 const express = require('express');
+const { getUsers, getUserById, createUser} = require('../controllers/userController')
 
 const userRoutes = express.Router();
 
-userRoutes.get('/', (req, res) => {
-  res.send('Hell world');
-});
+userRoutes.get('/', getUsers);
 
-userRoutes.get('/:id', (req, res) => {
-  res.send('Single user');
-});
+userRoutes.get('/:id', getUserById);
 
-userRoutes.post('/', express.json(), (req, res) => {
-  res.send(req.body);
-});
+userRoutes.post('/', express.json(), createUser);
 
 exports.userRoutes = userRoutes;
