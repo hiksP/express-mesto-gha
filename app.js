@@ -1,12 +1,15 @@
 const express = require('express');
 const path = require('path')
 const { routes } = require('./routes/routes');
+const mongoose = require('mongoose');
 
 const { PORT = 3000} = process.env;
 
 const PUBLIC_FOLDER = path.join(__dirname, 'public');
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use((req, res, next) => {
   console.log(req.method, req.path);
