@@ -2,11 +2,14 @@ GET http://localhost:3000/users/625c676597f3047639f7e6b8
 
 ###
 
-POST http://localhost:3000/users
+PATCH http://localhost:3000/users/me
 Content-type: application/json
 
 {
-  "name": "Петр",
-  "about": "никто",
-  "avatar": "https://sun9-50.userapi.com/impg/eZREyXt3FwTPQUjXKPo1wFJ5LVw24oYdvF9PRw/7ctNFBbaw28.jpg?size=1125x1379&quality=96&sign=7b3857a32f41fa8482190a3188805f88&type=album"
+  "name": "Петр2",
+  "about": "уже ктото"
 }
+
+###
+
+DELETE http://localhost:3000/cards/625eed12ffa8418c42aea9d6
