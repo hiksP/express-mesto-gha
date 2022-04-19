@@ -7,7 +7,7 @@ cardRoutes.get('/', getCards);
 
 cardRoutes.post('/', express.json(), createCard);
 
-cardRoutes.delete('/:cardId', deleteCard);
+cardRoutes.delete('/:cardId', express.json(), deleteCard);
 
 cardRoutes.put('/:cardId/likes', likeCard);
 
