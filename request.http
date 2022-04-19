@@ -1,4 +1,4 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/users/625c676597f3047639f7e6b8
 
 ###
 

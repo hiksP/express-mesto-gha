@@ -14,6 +14,14 @@ app.use((req, res, next) => {
   next();
 })
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: '625c676597f3047639f7e6b8'
+  };
+
+  next();
+});
+
 app.use(express.static(PUBLIC_FOLDER));
 
 app.use(routes);

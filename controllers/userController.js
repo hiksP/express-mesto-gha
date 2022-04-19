@@ -7,8 +7,10 @@ exports.getUsers = async (req, res) => {
   res.send(users);
 }
 
-exports.getUserById = (req, res) => {
-  res.send(User.find((item) => item._id === req.params.id));
+exports.getUserById = async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  res.send(user);
 }
 
 exports.createUser = async (req, res) => {
