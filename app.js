@@ -10,17 +10,17 @@ const PUBLIC_FOLDER = path.join(__dirname, 'public');
 const app = express();
 
 app.use((req, res, next) => {
-  console.log(req.method, req.path);
-  next();
-})
-
-app.use((req, res, next) => {
   req.user = {
     _id: '625c676597f3047639f7e6b8'
   };
 
   next();
 });
+
+app.use((req, res, next) => {
+  console.log(req.method, req.path);
+  next();
+})
 
 app.use(express.static(PUBLIC_FOLDER));
 

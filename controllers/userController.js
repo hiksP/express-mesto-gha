@@ -3,21 +3,33 @@ const { findById } = require('../models/card');
 const { User } = require('../models/user');
 
 exports.getUsers = async (req, res) => {
-  const users = await User.find({});
+  try {
+    const users = await User.find({});
 
-  res.send(users);
+    res.send(users);
+  } catch(err) {
+    res.status(500).send({message: "Произошла ошибка"})
+  }
 }
 
 exports.getUserById = async (req, res) => {
-  const user = await User.findById(req.params.id)
+  try {
+    const user = await User.findById(req.params.id)
 
-  res.send(user);
+    res.send(user);
+  } catch(err) {
+    res.status(404).send({message: "Пользователь не найден"})
+  }
 }
 
 exports.createUser = async (req, res) => {
-  const user =  await User.create(req.body);
+  try {
+    const user =  await User.create(req.body);
 
-  res.send(user);
+    res.send(user);
+  } catch (err) {
+    res.status(400).send({message: "Переданы некорретные данные"})
+  }
 }
 
 exports.updateUser = async (req, res) => {
@@ -26,7 +38,7 @@ exports.updateUser = async (req, res) => {
     new: true
   })
   .then(user => res.send({data: user}))
-  .catch(err => res.status(500).send({message: 'Произошла ошибка'}))
+  .catch(err => res.status(500).send({message: 'Переданы некорректные данные'}))
 }
 
 exports.changeAvatar =  async (req, res) => {
@@ -35,5 +47,5 @@ exports.changeAvatar =  async (req, res) => {
    new: true
  })
  .then(user => res.send({data: user}))
- .catch(err => res.status(500).send({message: 'Произошла ошибка'}))
+ .catch(err => res.status(500).send({message: 'Переданы некорректные данные'}))
 }

@@ -1,14 +1,9 @@
 GET http://localhost:3000/cards
-Content-Type: application/json
-
-{
-  "name": "place",
-  "link": "https://sun9-16.userapi.com/s/v1/if2/pRHSgHwIpp78PAKjdDj9DCB8bPB-Kt4Brc-3O3SQs8Ll0EyeCkikmok78abc7WYq240GBw52H4vNWM8CmWQvdas8.jpg?size=859x845&quality=96&type=album"
-}
 
 ###
 
 PUT http://localhost:3000/cards/625ef51744e2be5929b4a6e4/likes
+
 
 
 ###
@@ -23,9 +18,9 @@ Content-type: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/625eea83ffa8418c42aea9d0
+POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-  "cardId": "625eea83ffa8418c42aea9d0"
+  "name": "aboba"
 }
