@@ -15,6 +15,9 @@ exports.getUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
+    if(user == null) {
+      throw new Error('Произошла ошибка');
+    }
 
     res.send(user);
   } catch(err) {
@@ -35,7 +38,8 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, {name, about}, {
-    new: true
+    new: true,
+    runValidators: true
   })
   .then(user => res.send({data: user}))
   .catch(err => res.status(500).send({message: 'Переданы некорректные данные'}))
@@ -44,7 +48,8 @@ exports.updateUser = async (req, res) => {
 exports.changeAvatar =  async (req, res) => {
  const {avatar} = req.body;
  User.findByIdAndUpdate(req.user._id, {avatar}, {
-   new: true
+   new: true,
+   runValidators: true
  })
  .then(user => res.send({data: user}))
  .catch(err => res.status(500).send({message: 'Переданы некорректные данные'}))
