@@ -4,8 +4,11 @@ const mongoose = require('mongoose')
 exports.getCards = async (req, res) => {
   try {
     const cards = await Card.find({});
-
-    res.send(cards);
+    if(!cards) {
+      res.status(404).send({message: "Карточек нет :("})
+    } else {
+      res.send(cards);
+    }
   } catch(err) {
     res.status(500).send({message: "Произошла ошибка"})
   }
@@ -13,8 +16,20 @@ exports.getCards = async (req, res) => {
 
 exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
-  .then(card => res.send({data: card}))
-  .catch(err => res.status(500).send({message: "Произошла ошибка"}))
+  .then(card => {
+    if(!card) {
+      res.status(404).send({message: "Карточка не найдена"})
+    } else {
+      res.send({data: card})
+    }
+  })
+  .catch(err => {
+    if (err.name === 'ValidationError'){
+      res.status(400).send({ message: "Некорректные данные"});
+    } else {
+      res.status(500).send({message: "Произошла ошибка"})
+    }
+  })
 };
 
 module.exports.createCard = (req, res) => {
@@ -22,7 +37,13 @@ module.exports.createCard = (req, res) => {
 
   Card.create({ name, link, owner: req.user._id })
     .then(card => res.send({ data: card }))
-    .catch(err => res.status(400).send({message: "Переданы некорректные данные"}))
+    .catch(err => {
+      if(err.name === "ValidationError") {
+        res.status(400).send({message: "Переданы некорректные данные"})
+      } else {
+        res.status(500).send({message: "Произошла ошибка"})
+      }
+    })
 };
 
 exports.likeCard = async (req, res) => {
@@ -40,6 +61,8 @@ exports.likeCard = async (req, res) => {
     .catch(err => {
       if(err.name === "CastError") {
         res.status(400).send({message: "Невалидный id"})
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка' })
       }
     })
 }
@@ -60,6 +83,8 @@ exports.dislikeCard = async (req, res) => {
     .catch(err => {
       if(err.name === "CastError") {
         res.status(400).send({message: "Невалидный id"})
+      } else {
+        res.status(500).send({ message: 'Произошла ошибка' })
       }
     })
 }

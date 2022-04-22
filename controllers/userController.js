@@ -5,7 +5,9 @@ const { User } = require('../models/user');
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({});
-
+    if(!users) {
+      res.status(404).send({message: "Пользователи не найдены :("})
+    } else {}
     res.send(users);
   } catch(err) {
     res.status(500).send({message: "Произошла ошибка"})
@@ -23,7 +25,9 @@ exports.getUserById = async (req, res) => {
   } catch(err) {
     if(err.name === 'CastError'){
       res.status(400).send({ message: 'Невалидный id ' });
-     }
+     } else {
+      res.status(500).send({ message: 'Произошла ошибка' })
+    }
   }
 }
 
@@ -33,7 +37,11 @@ exports.createUser = async (req, res) => {
 
     res.send(user);
   } catch (err) {
-    res.status(400).send({message: "Переданы некорретные данные"})
+    if(err.name === "ValidationError") {
+      res.status(400).send({message: "Переданы некорректные данные"})
+    } else {
+      res.status(500).send({message: "Произошла ошибка"})
+    }
   }
 }
 
@@ -44,7 +52,13 @@ exports.updateUser = async (req, res) => {
     runValidators: true
   })
   .then(user => res.send({data: user}))
-  .catch(err => res.status(500).send({message: 'Переданы некорректные данные'}))
+  .catch(err => {
+    if(err.name === "ValidationError") {
+      res.status(400).send({message: "Переданы некорректные данные"})
+    } else {
+      res.status(500).send({message: "Произошла ошибка"})
+    }
+  })
 }
 
 exports.changeAvatar =  async (req, res) => {

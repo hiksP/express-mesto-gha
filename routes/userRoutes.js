@@ -7,10 +7,10 @@ userRoutes.get('/', getUsers);
 
 userRoutes.get('/:id', getUserById);
 
-userRoutes.post('/', express.json(), createUser);
+userRoutes.post('/', createUser);
 
-userRoutes.patch('/me', express.json(), updateUser);
+userRoutes.patch('/me', updateUser);
 
-userRoutes.patch('/me/avatar', express.json(), changeAvatar);
+userRoutes.patch('/me/avatar', changeAvatar);
 
 exports.userRoutes = userRoutes;

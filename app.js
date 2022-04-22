@@ -24,6 +24,7 @@ app.use(( req, res, next) => {
 
 app.use(express.static(PUBLIC_FOLDER));
 
+app.use(express.json());
 app.use(routes);
 app.use((req, res) => {
   res.status(404).send({ message: "Данной страницы не существует" });
