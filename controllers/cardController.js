@@ -30,8 +30,18 @@ exports.likeCard = async (req, res) => {
       req.params.cardId,
       { $addToSet: { likes: req.user._id } },
       { new: true }
-    ) .then(card => res.send(card))
-    .catch(err => res.status(404).send({message: "Карточка не найдена"}))
+    ) .then(card => {
+      if(!card) {
+        res.status(404).send({message: "Карточка не найдена"})
+      } else {
+        res.send(card)
+      }
+    })
+    .catch(err => {
+      if(err.name === "CastError") {
+        res.status(400).send({message: "Невалидный id"})
+      }
+    })
 }
 
 exports.dislikeCard = async (req, res) => {
@@ -40,6 +50,16 @@ exports.dislikeCard = async (req, res) => {
       { $pull: { likes: req.user._id } },
       { new: true }
     )
-    .then(card => res.send(card))
-    .catch(err => res.status(404).send({message: "Карточка не найдена"}))
+    .then(card => {
+      if(!card) {
+        res.status(404).send({message: "Карточка не найдена"})
+      } else {
+        res.send(card)
+      }
+    })
+    .catch(err => {
+      if(err.name === "CastError") {
+        res.status(400).send({message: "Невалидный id"})
+      }
+    })
 }

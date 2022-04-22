@@ -1,9 +1,8 @@
-GET http://localhost:3000/cards
-
+GET http://localhost:3000/users/63123123
 
 ###
 
-PUT  http://localhost:3000/cards/625ef51744e2be5929b4a6e4/likes
+DELETE   http://localhost:3000/cards/625ef51744e2be5929b4a6e4/likes
 
 
 
@@ -23,5 +22,7 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-  "name": "aboba"
+  "name": "abodasba2",
+  "about": "wdasdho2",
+  "avatar": "https://sun9-50.userapi.com/s/v1/ig2/89BsWm9BrMy_CuoMx-i9wZaW9Bs9-WDdTTFwvZf3UDrDcbNkzIxK4pEYKZvCWnLevBFa1JmQyqmBBgVCYsxzA4E4.jpg?size=1125x1379&quality=96&type=album"
 }

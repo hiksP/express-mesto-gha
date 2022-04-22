@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { findById } = require('../models/card');
+const { findById, off } = require('../models/card');
 const { User } = require('../models/user');
 
 exports.getUsers = async (req, res) => {
@@ -13,15 +13,17 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.getUserById = async (req, res) => {
-  try {
+  try{
     const user = await User.findById(req.params.id)
     if(user == null) {
-      throw new Error('Произошла ошибка');
+      res.status(404).send({message: "Пользователь не найден"})
+    } else {
+      res.send(user);
     }
-
-    res.send(user);
   } catch(err) {
-    res.status(404).send({message: "Пользователь не найден"})
+    if(err.name === 'CastError'){
+      res.status(400).send({ message: 'Невалидный id ' });
+     }
   }
 }
 
