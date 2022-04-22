@@ -18,13 +18,16 @@ exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
   .then(card => {
     if(!card) {
-      res.status(400).send({message: "Карточка не найдена"})
+      res.status(404).send({message: "Карточка не найдена"})
     } else {
       res.send({data: card})
     }
   })
   .catch(err => {
-    if (err.name === 'ValidationError'){
+    if(err.name === 'CastError'){
+      res.status(400).send({ message: 'Невалидный id ' });
+     }
+    else if (err.name === 'ValidationError'){
       res.status(400).send({ message: "Некорректные данные"});
     } else {
       res.status(500).send({message: "Произошла ошибка"})
@@ -41,8 +44,8 @@ module.exports.createCard = (req, res) => {
       if(err.name === "ValidationError") {
         res.status(400).send({message: "Переданы некорректные данные"})
       } else {
-        res.status(500).send({message: "Произошла ошибка"})
-      }
+      res.status(500).send({message: "Произошла ошибка"})
+    }
     })
 };
 
