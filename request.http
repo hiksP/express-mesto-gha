@@ -2,7 +2,7 @@ PUT http://localhost:3000/cards/63123123/likes
 
 ###
 
-DELETE   http://localhost:3000/cards/625ef51744e2be5929b4a6e4/likes
+DELETE   http://localhost:3000/cards/text/
 
 
 
