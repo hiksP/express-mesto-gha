@@ -1,4 +1,4 @@
-PUT http://localhost:3000/cards/63123123/likes
+PUT http://localhost:3000/cards/cards
 
 ###
 
