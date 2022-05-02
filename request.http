@@ -1,4 +1,4 @@
-PUT http://localhost:3000/cards/cards
+GET  http://localhost:3000/users
 
 ###
 
@@ -18,11 +18,10 @@ Content-type: application/json
 
 ###
 
-POST http://localhost:3000/users/
+POST http://localhost:3000/cards
 Content-Type: application/json
 
 {
   "name": "новый пользоветль",
-  "about": "wdasdho2",
-  "avatar": "https://sun9-50.userapi.com/s/v1/ig2/89BsWm9BrMy_CuoMx-i9wZaW9Bs9-WDdTTFwvZf3UDrDcbNkzIxK4pEYKZvCWnLevBFa1JmQyqmBBgVCYsxzA4E4.jpg?size=1125x1379&quality=96&type=album"
+  "link": "https://sun9-50.userapi.com/s/v1/ig2/89BsWm9BrMy_CuoMx-i9wZaW9Bs9-WDdTTFwvZf3UDrDcbNkzIxK4pEYKZvCWnLevBFa1JmQyqmBBgVCYsxzA4E4.jpg?size=1125x1379&quality=96&type=album"
 }

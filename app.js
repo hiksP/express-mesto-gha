@@ -8,7 +8,7 @@ const app = express();
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '625c676597f3047639f7e6b8',
+    _id: '626fa89d71d41131ea68941e',
   };
 
   next();
@@ -26,7 +26,7 @@ app.use((req, res) => {
 });
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/mestodb');
+  await mongoose.connect('mongodb://127.0.0.1/mestodb');
 
   app.listen(PORT, () => {
     console.log('etwas');

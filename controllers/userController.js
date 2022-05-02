@@ -1,4 +1,6 @@
 const { User } = require('../models/user');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.getUsers = async (req, res) => {
   try {
@@ -32,8 +34,11 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
-
+    bcrypt.hash(req.body.password, 10)
+    const user = await User.create({
+      email: req.body.email,
+      password: hash,
+    })
     res.send(user);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -75,3 +80,15 @@ exports.changeAvatar = async (req, res) => {
       }
     });
 };
+
+exports.login = (req, res) => {
+  const {email, password} = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+       const token = jwt.sign({ _id: user._id }, 'pass', { expiresIn: '7d' });
+        res.send({token})
+    })
+   .catch((err) => {
+     res.status(401).send({message: err.message});
+   })
+}
