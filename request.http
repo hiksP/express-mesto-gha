@@ -1,8 +1,14 @@
 POST  http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "email": "qksy3123o@yandex.ru",
+  "password": "321"
+}
 
 ###
 
-DELETE   http://localhost:3000/cards/text/
+GET   http://localhost:3000/cards/
 
 
 

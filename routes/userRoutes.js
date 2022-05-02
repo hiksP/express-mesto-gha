@@ -1,12 +1,14 @@
 const express = require('express');
 const {
-  getUsers, getUserById, createUser, updateUser, changeAvatar,
+  getUsers, getUserById, getInfo, updateUser, changeAvatar,
 } = require('../controllers/userController');
 const auth = require('../middlewares/auth');
 
 const userRoutes = express.Router();
 
 userRoutes.get('/', auth, getUsers);
+
+userRoutes.get('/me', auth, getInfo);
 
 userRoutes.get('/:id', auth, getUserById);
 

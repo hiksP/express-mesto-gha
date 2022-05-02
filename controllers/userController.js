@@ -1,5 +1,7 @@
 const { User } = require('../models/user');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { hash } = require('bcrypt');
 
 exports.getUsers = async (req, res) => {
   try {
@@ -33,10 +35,18 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    bcrypt.hash(req.body.password, 10)
+    const hashedPassword = await new Promise((resolve, reject) => {
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        if(err) {
+          reject(err)
+        } else {
+          resolve(hash)
+        }
+      })
+    })
     const user = await User.create({
       email: req.body.email,
-      password: hash,
+      password: hashedPassword,
     })
     res.send(user);
   } catch (err) {
@@ -79,6 +89,10 @@ exports.changeAvatar = async (req, res) => {
       }
     });
 };
+
+exports.getInfo = async (req, res) => {
+
+}
 
 exports.login = (req, res) => {
   const {email, password} = req.body;
