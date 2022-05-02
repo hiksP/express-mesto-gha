@@ -1,5 +1,4 @@
 const { User } = require('../models/user');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.getUsers = async (req, res) => {
@@ -86,7 +85,12 @@ exports.login = (req, res) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
        const token = jwt.sign({ _id: user._id }, 'pass', { expiresIn: '7d' });
-        res.send({token})
+       res
+       .cookie('jwt', token, {
+         maxAge: { maxAge: 3600000 * 24 * 7 },
+         httpOnly: true
+       })
+       .send(token);
     })
    .catch((err) => {
      res.status(401).send({message: err.message});
