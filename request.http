@@ -1,14 +1,14 @@
-POST  http://localhost:3000/signup
+POST  http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email": "qksy3123o@yandex.ru",
+  "email": "qksyo@yandex.ru",
   "password": "321"
 }
 
 ###
 
-GET   http://localhost:3000/cards/
+GET   http://localhost:3000/users/
 
 
 

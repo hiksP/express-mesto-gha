@@ -2,6 +2,7 @@ const { User } = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { hash } = require('bcrypt');
+const { getJwtToken } = require('../utils/jwt');
 
 exports.getUsers = async (req, res) => {
   try {
@@ -91,17 +92,20 @@ exports.changeAvatar = async (req, res) => {
 };
 
 exports.getInfo = async (req, res) => {
-
+  const usertoken = req.headers.authorization;
+  const token = usertoken.split(' ')
+  const decoded = jwt.verify(token[1], 'pass');
+  console.log(decoded);
 }
 
 exports.login = (req, res) => {
   const {email, password} = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-       const token = jwt.sign({ _id: user._id }, 'pass', { expiresIn: '7d' });
+       const token = getJwtToken(user._id); 
        res
        .cookie('jwt', token, {
-         maxAge: { maxAge: 3600000 * 24 * 7 },
+         maxAge: 3600000 * 24 * 7,
          httpOnly: true
        })
        .send(token);

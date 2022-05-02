@@ -1,10 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { routes } = require('./routes/routes');
+const cookieParser = require('cookie-parser');
+
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
+
+app.use(cookieParser())
 
 app.use((req, res, next) => {
   req.user = {
@@ -19,7 +23,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
 app.use(routes);
 app.use((req, res) => {
   res.status(404).send({ message: 'Данной страницы не существует' });
