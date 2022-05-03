@@ -18,7 +18,20 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(routes);
 app.use((err, req, res, next) => {
-  res.status(err.statusCode).send({ message: err.message });
+  const { statusCode = 500, message } = err;
+  if(err.name === 'CastError') {
+    res.status(400).send({ message: 'Невалидный id ' });
+  } else if(err.name === 'ValidationError') {
+    res.status(400).send({ message: 'Переданы некорректные данные' });
+  } else {
+    res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message
+    });
+  }
 });
 
 async function main() {

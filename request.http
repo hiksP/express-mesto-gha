@@ -8,12 +8,17 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/cards
+GET http://localhost:3000/users/me
+
 
 ###
 
-DELETE http://localhost:3000/cards/627121e62277c6d0e911fc3d/
+POST http://localhost:3000/signin
+Content-Type: application/json
 
+{
+  "name": ""
+}
 
 ###
 
