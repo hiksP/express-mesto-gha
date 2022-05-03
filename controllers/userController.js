@@ -61,7 +61,7 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
+  User.findByIdAndUpdate(req.user.id, { name, about }, {
     new: true,
     runValidators: true,
   })
@@ -77,7 +77,7 @@ exports.updateUser = async (req, res) => {
 
 exports.changeAvatar = async (req, res) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar }, {
+  User.findByIdAndUpdate(req.user.id, { avatar }, {
     new: true,
     runValidators: true,
   })

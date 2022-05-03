@@ -11,18 +11,11 @@ const app = express();
 app.use(cookieParser())
 
 app.use((req, res, next) => {
-  req.user = {
-    _id: '626fa89d71d41131ea68941e',
-  };
-
-  next();
-});
-
-app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
 });
 
+app.use(express.json());
 app.use(routes);
 app.use((req, res) => {
   res.status(404).send({ message: 'Данной страницы не существует' });

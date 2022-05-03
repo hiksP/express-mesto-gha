@@ -8,7 +8,13 @@ Content-Type: application/json
 
 ###
 
-GET   http://localhost:3000/users/me
+GET http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "name": "card",
+  "link": "https://sun9-74.userapi.com/s/v1/if2/-k1MbxALL17mVaUYimjYjT7TzNdVGnBk6oyxjZAEfWEPohcsGZNTfmHhw396ArSnWfRlE20X_YjUfcXN4Bt3fYdB.jpg?size=1440x1920&quality=95&type=album"
+}
 
 
 
@@ -28,6 +34,6 @@ POST http://localhost:3000/cards
 Content-Type: application/json
 
 {
-  "name": "новый пользоветль",
+  "name": "новый пользоветль3232",
   "link": "https://sun9-50.userapi.com/s/v1/ig2/89BsWm9BrMy_CuoMx-i9wZaW9Bs9-WDdTTFwvZf3UDrDcbNkzIxK4pEYKZvCWnLevBFa1JmQyqmBBgVCYsxzA4E4.jpg?size=1125x1379&quality=96&type=album"
 }
