@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/users/me
+DELETE  http://localhost:3000/cards/62711cbceaf2d0423f1f29a2
 
 
 ###
