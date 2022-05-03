@@ -92,10 +92,22 @@ exports.changeAvatar = async (req, res) => {
 };
 
 exports.getInfo = async (req, res) => {
-  const usertoken = req.headers.authorization;
-  const token = usertoken.split(' ')
-  const decoded = jwt.verify(token[1], 'pass');
-  console.log(decoded);
+  const usertoken = req.cookies.jwt
+  const decoded = jwt.verify(usertoken, 'pass');
+  try {
+    const user = await User.findById(decoded.id);
+    if (user == null) {
+      res.status(404).send({ message: 'Пользователь не найден' });
+    } else {
+      res.send(user);
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      res.status(400).send({ message: 'Невалидный id ' });
+    } else {
+      res.status(500).send({ message: 'Произошла ошибка' });
+    }
+  }
 }
 
 exports.login = (req, res) => {
