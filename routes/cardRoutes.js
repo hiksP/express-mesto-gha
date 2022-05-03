@@ -3,12 +3,18 @@ const {
   getCards, deleteCard, createCard, likeCard, dislikeCard,
 } = require('../controllers/cardController');
 const auth = require('../middlewares/auth');
+const { celebrate, Joi } = require('celebrate');
 
 const cardRoutes = express.Router();
 
 cardRoutes.get('/', auth, getCards);
 
-cardRoutes.post('/', auth, createCard);
+cardRoutes.post('/', auth, celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required()
+  }),
+}), createCard);
 
 cardRoutes.delete('/:cardId', auth, deleteCard);
 

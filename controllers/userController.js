@@ -50,7 +50,11 @@ exports.createUser = async (req, res, next) => {
     })
     res.send(user);
   } catch (err) {
-    next(err)
+    if(err.code === 11000) {
+      res.status(409).send({message: "Пользователь уже зарегестрирован!"})
+    } else {
+      next(err)
+    }
   }
 };
 

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { routes } = require('./routes/routes');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 
 
 const { PORT = 3000 } = process.env;
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(routes);
+app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   if(err.name === 'CastError') {
