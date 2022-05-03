@@ -14,12 +14,15 @@ exports.getCards = async (req, res) => {
 };
 
 exports.deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  Card.findById(req.params.cardId)
     .then((card) => {
       if (!card) {
         res.status(404).send({ message: 'Карточка не найдена' });
-      } else {
+      } else if(card.owner.toString() === req.user.id) {
+        card.remove()
         res.send({ data: card });
+      } else {
+        res.status(403).send({message: 'Недостаточно прав'});
       }
     })
     .catch((err) => {
