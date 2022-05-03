@@ -3,12 +3,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { hash } = require('bcrypt');
 const { getJwtToken } = require('../utils/jwt');
+const NotFoundError = require('../errors/not-found-err');
+const wrongAuthError = require('../errors/wrong-auth-err');
+const wrongReqErorr = require('../errors/wrong-req-err');
 
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({});
     if (!users) {
-      res.status(404).send({ message: 'Пользователи не найдены :(' });
+      throw new NotFoundError('пользователи не найдены :(');
     } else {
       res.send(users);
     }
