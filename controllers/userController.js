@@ -46,7 +46,9 @@ exports.createUser = async (req, res, next) => {
       email: req.body.email,
       password: hashedPassword,
     });
-    res.send(user);
+    res.send({
+      email: user.email,
+    });
   } catch (err) {
     if (err.code === 11000) {
       res.status(409).send({ message: 'Пользователь уже зарегестрирован!' });
@@ -106,6 +108,8 @@ exports.login = (req, res, next) => {
           })
           .send(token);
       })
-      .catch(next);
+      .catch((err) => {
+        next(err);
+      });
   }
 };
