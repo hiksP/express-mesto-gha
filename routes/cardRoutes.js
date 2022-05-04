@@ -1,22 +1,22 @@
 const express = require('express');
+const { celebrate, Joi } = require('celebrate');
 const {
   getCards, deleteCard, createCard, likeCard, dislikeCard,
 } = require('../controllers/cardController');
 const auth = require('../middlewares/auth');
-const { celebrate, Joi } = require('celebrate');
 
 const cardRoutes = express.Router();
 
 cardRoutes.get('/', auth, celebrate({
   headers: Joi.object().keys({
     cookie: Joi.string().required(),
-  }).unknown(true)
+  }).unknown(true),
 }), getCards);
 
 cardRoutes.post('/', auth, celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required()
+    link: Joi.string().required(),
   }),
 }), createCard);
 
