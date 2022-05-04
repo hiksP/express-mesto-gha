@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { hash } = require('bcrypt');
 const { User } = require('../models/user');
 const { getJwtToken } = require('../utils/jwt');
 const NotFoundError = require('../errors/not-found-err');

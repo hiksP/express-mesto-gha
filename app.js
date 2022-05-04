@@ -33,6 +33,7 @@ app.use((err, req, res, next) => {
           : message,
       });
   }
+  next();
 });
 
 async function main() {
