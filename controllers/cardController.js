@@ -1,8 +1,6 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
-const wrongAuthError = require('../errors/wrong-auth-err');
-const wrongReqErorr = require('../errors/wrong-req-err');
-const noRightsError = require('../errors/no-rights-err');
+const NoRightsError = require('../errors/no-rights-err');
 
 exports.getCards = async (req, res, next) => {
   console.log(req.headers);
@@ -27,7 +25,7 @@ exports.deleteCard = (req, res, next) => {
         card.remove();
         res.send({ data: card });
       } else {
-        throw new noRightsError('Недостаточно прав');
+        throw new NoRightsError('Недостаточно прав');
       }
     })
     .catch(next);

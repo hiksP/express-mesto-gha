@@ -1,8 +1,8 @@
-class noRightsError extends Error {
+class NoRightsError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = 403;
   }
 }
 
-module.exports = noRightsError;
+module.exports = NoRightsError;

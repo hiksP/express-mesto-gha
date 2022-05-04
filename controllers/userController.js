@@ -4,8 +4,7 @@ const { hash } = require('bcrypt');
 const { User } = require('../models/user');
 const { getJwtToken } = require('../utils/jwt');
 const NotFoundError = require('../errors/not-found-err');
-const wrongAuthError = require('../errors/wrong-auth-err');
-const wrongReqErorr = require('../errors/wrong-req-err');
+const WrongAuthError = require('../errors/wrong-auth-err');
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -21,7 +20,6 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.getUserById = async (req, res, next) => {
-  console.log(req.params);
   try {
     const user = await User.findById(req.params.id);
     if (user == null) {
@@ -97,7 +95,7 @@ exports.getInfo = async (req, res, next) => {
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw new wrongAuthError('Не введен логин или пароль');
+    throw new WrongAuthError('Не введен логин или пароль');
   } else {
     return User.findUserByCredentials(email, password)
       .then((user) => {
