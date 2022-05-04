@@ -21,6 +21,7 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.getUserById = async (req, res, next) => {
+  console.log(req.params)
   try {
     const user = await User.findById(req.params.id);
     if (user == null) {

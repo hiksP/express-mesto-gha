@@ -5,6 +5,7 @@ const wrongReqErorr = require('../errors/wrong-req-err');
 const noRightsError = require('../errors/no-rights-err');
 
 exports.getCards = async (req, res, next) => {
+  console.log(req.headers)
   try {
     const cards = await Card.find({});
     if (!cards) {

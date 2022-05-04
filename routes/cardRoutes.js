@@ -7,7 +7,11 @@ const { celebrate, Joi } = require('celebrate');
 
 const cardRoutes = express.Router();
 
-cardRoutes.get('/', auth, getCards);
+cardRoutes.get('/', auth, celebrate({
+  headers: Joi.object().keys({
+    cookie: Joi.string().required(),
+  }).unknown(true)
+}), getCards);
 
 cardRoutes.post('/', auth, celebrate({
   body: Joi.object().keys({
@@ -16,10 +20,22 @@ cardRoutes.post('/', auth, celebrate({
   }),
 }), createCard);
 
-cardRoutes.delete('/:cardId', auth, deleteCard);
+cardRoutes.delete('/:cardId', auth, celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }).unknown(true),
+}), deleteCard);
 
-cardRoutes.put('/:cardId/likes', auth, likeCard);
+cardRoutes.put('/:cardId/likes', auth, celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }).unknown(true),
+}), likeCard);
 
-cardRoutes.delete('/:cardId/likes', auth, dislikeCard);
+cardRoutes.delete('/:cardId/likes', auth, celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().alphanum().length(24),
+  }).unknown(true),
+}), dislikeCard);
 
 exports.cardRoutes = cardRoutes;

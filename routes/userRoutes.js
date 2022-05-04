@@ -7,11 +7,23 @@ const { celebrate, Joi } = require('celebrate');
 
 const userRoutes = express.Router();
 
-userRoutes.get('/', auth, getUsers);
+userRoutes.get('/', auth, celebrate({
+  headers: Joi.object().keys({
+    cookie: Joi.string().required(),
+  }).unknown(true)
+}), getUsers);
 
-userRoutes.get('/me', auth, getInfo);
+userRoutes.get('/me', auth, celebrate({
+  headers: Joi.object().keys({
+    cookie: Joi.string().required(),
+  }).unknown(true)
+}), getInfo);
 
-userRoutes.get('/:id', auth, getUserById);
+userRoutes.get('/:id', auth, celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().required(),
+  })
+}), getUserById);
 
 userRoutes.patch('/me', auth, celebrate({
   body: Joi.object().keys({
