@@ -4,6 +4,8 @@ const { User } = require('../models/user');
 const { getJwtToken } = require('../utils/jwt');
 const NotFoundError = require('../errors/not-found-err');
 const WrongAuthError = require('../errors/wrong-auth-err');
+const WrongReqErorr = require('../errors/wrong-req-err');
+const UserCreatedError = require('../errors/user-created-err');
 
 exports.getUsers = async (req, res, next) => {
   try {
@@ -51,7 +53,9 @@ exports.createUser = async (req, res, next) => {
     });
   } catch (err) {
     if (err.code === 11000) {
-      res.status(409).send({ message: 'Пользователь уже зарегестрирован!' });
+      next(new UserCreatedError('Пользователь с такой почтой уже зарегестрирован!'));
+    } else if (err.name === 'ValidationError' || err.name === 'CastError') {
+      next(new WrongReqErorr('Переданы некорректные данные'));
     } else {
       next(err);
     }
@@ -65,7 +69,13 @@ exports.updateUser = async (req, res, next) => {
     runValidators: true,
   })
     .then((user) => res.send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 exports.changeAvatar = async (req, res, next) => {
@@ -75,7 +85,13 @@ exports.changeAvatar = async (req, res, next) => {
     runValidators: true,
   })
     .then((user) => res.send({ data: user }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 exports.getInfo = async (req, res, next) => {

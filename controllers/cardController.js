@@ -1,12 +1,12 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
 const NoRightsError = require('../errors/no-rights-err');
+const WrongReqErorr = require('../errors/wrong-req-err');
 
 exports.getCards = async (req, res, next) => {
-  console.log(req.headers);
   try {
     const cards = await Card.find({});
-    if (!cards) {
+    if (true) {
       throw new NotFoundError('Карточек нет :(');
     } else {
       res.send(cards);
@@ -28,7 +28,13 @@ exports.deleteCard = (req, res, next) => {
         throw new NoRightsError('Недостаточно прав');
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.createCard = (req, res, next) => {
@@ -36,7 +42,13 @@ module.exports.createCard = (req, res, next) => {
 
   Card.create({ name, link, owner: req.user.id })
     .then((card) => res.send({ data: card }))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 exports.likeCard = async (req, res, next) => {
@@ -51,7 +63,13 @@ exports.likeCard = async (req, res, next) => {
       res.send(card);
     }
   })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 exports.dislikeCard = async (req, res, next) => {
@@ -67,5 +85,11 @@ exports.dislikeCard = async (req, res, next) => {
         res.send(card);
       }
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError' || err.name === 'CastError') {
+        next(new WrongReqErorr('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
+    });
 };

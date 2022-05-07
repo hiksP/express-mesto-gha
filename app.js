@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { routes } = require('./routes/routes');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -17,25 +18,19 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(routes);
-app.use((req, res) => {
-  res.status(404).send({ message: 'Данной страницы не существует' });
+app.use((req, res, next) => {
+  next(new NotFoundError('Страница не найдена'));
 });
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  if (err.name === 'CastError') {
-    res.status(400).send({ message: 'Невалидный id ' });
-  } else if (err.name === 'ValidationError') {
-    res.status(400).send({ message: 'Переданы некорректные данные' });
-  } else {
-    res
-      .status(statusCode)
-      .send({
-        message: statusCode === 500
-          ? 'На сервере произошла ошибка'
-          : message,
-      });
-  }
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
   next();
 });
 

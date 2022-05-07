@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-GET  http://localhost:3000/404 
+GET  http://localhost:3000/cards/5ffdd53232328f 
 
 
 
