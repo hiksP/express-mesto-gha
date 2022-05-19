@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 const { routes } = require('./routes/routes');
 const NotFoundError = require('./errors/not-found-err');
 const auth = require('./middlewares/auth');
+const { login, createUser } = require('./controllers/userController');
 
 const { PORT = 3000 } = process.env;
 
@@ -18,6 +20,23 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.post('/signin', express.json(), celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+}), login);
+app.post('/signup', express.json(), celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    avatar: Joi.string().pattern(
+      /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/,
+    ),
+  }),
+}), createUser);
 app.use(auth);
 app.use(routes);
 app.use((req, res, next) => {
