@@ -10,7 +10,7 @@ const UserCreatedError = require('../errors/user-created-err');
 exports.getUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
-    if (!users) {
+    if (users.length < 1) {
       throw new NotFoundError('пользователи не найдены :(');
     } else {
       res.send(users);
@@ -122,7 +122,7 @@ exports.login = (req, res, next) => {
             maxAge: 3600000 * 24 * 7,
             httpOnly: true,
           })
-          .send(token);
+          .send(JSON.stringify(token));
       })
       .catch((err) => {
         next(err);

@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { routes } = require('./routes/routes');
 const NotFoundError = require('./errors/not-found-err');
+const auth = require('./middlewares/auth');
 
 const { PORT = 3000 } = process.env;
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(auth);
 app.use(routes);
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));

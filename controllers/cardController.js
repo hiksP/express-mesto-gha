@@ -6,7 +6,7 @@ const WrongReqErorr = require('../errors/wrong-req-err');
 exports.getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    if (true) {
+    if (cards.length < 1) {
       throw new NotFoundError('Карточек нет :(');
     } else {
       res.send(cards);
@@ -43,7 +43,7 @@ module.exports.createCard = (req, res, next) => {
   Card.create({ name, link, owner: req.user.id })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'CastError') {
         next(new WrongReqErorr('Переданы некорректные данные'));
       } else {
         next(err);
