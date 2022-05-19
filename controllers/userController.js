@@ -23,10 +23,10 @@ exports.getUsers = async (req, res, next) => {
 exports.getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
-    if (user == null) {
-      throw new NotFoundError('пользователь не найден');
-    } else {
+    if (user) {
       res.send(user);
+    } else {
+      throw new NotFoundError('пользователь не найден');
     }
   } catch (err) {
     next(err);
@@ -125,7 +125,7 @@ exports.login = (req, res, next) => {
           .send(JSON.stringify(token));
       })
       .catch((err) => {
-        next(err);
+        next(new WrongAuthError(err.message));
       });
   }
 };

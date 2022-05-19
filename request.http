@@ -2,23 +2,24 @@ POST  http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email": "qksyo@yandex.ru",
-  "password": "321"
+  "email": "qksyo33333@yandex.ru",
+  "password": "3213"
 }
 
 ###
 
-GET  http://localhost:3000/cards/5ffdd53232328f 
+GET  http://localhost:3000/cards/
 
 
 
 ###
 
-POST http://localhost:3000/signin
+POST http://localhost:3000/cards/
 Content-Type: application/json
 
 {
-  "name": ""
+  "name": "dadadad",
+  "link": "https://sun9-50.userapi.com/s/v1/ig2/89BsWm9BrMy_CuoMx-i9wZaW9Bs9-WDdTTFwvZf3UDrDcbNkzIxK4pEYKZvCWnLevBFa1JmQyqmBBgVCYsxzA4E4.jpg?size=1125x1379&quality=96&type=album"
 }
 
 ###
