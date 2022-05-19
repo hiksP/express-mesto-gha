@@ -5,8 +5,8 @@ const { registerRoutes } = require('./registerRoutes');
 
 const routes = express.Router();
 
+routes.use('', registerRoutes);
 routes.use('/users', userRoutes);
 routes.use('/cards', cardRoutes);
-routes.use('', registerRoutes);
 
 exports.routes = routes;

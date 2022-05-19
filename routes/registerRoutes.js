@@ -6,12 +6,14 @@ const registerRoutes = express.Router();
 
 registerRoutes.post('/signin', express.json(), celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email().required().max(30),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 }), login);
 registerRoutes.post('/signup', express.json(), celebrate({
   body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     avatar: Joi.string().pattern(
