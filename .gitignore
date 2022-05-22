@@ -1,14 +1,1 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-
-# Dependency directory
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.DS_Store
-.idea
-.vscodenode_modules/
+node_modules/
