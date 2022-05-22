@@ -117,12 +117,13 @@ exports.login = (req, res, next) => {
     return User.findUserByCredentials(email, password)
       .then((user) => {
         const token = getJwtToken(user._id);
+        console.log(token);
         res
           .cookie('jwt', token, {
             maxAge: 3600000 * 24 * 7,
             httpOnly: true,
           })
-          .send(JSON.stringify(token));
+          .send(JSON.stringify({ token }));
       })
       .catch((err) => {
         next(new WrongAuthError(err.message));
