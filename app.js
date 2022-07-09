@@ -7,6 +7,8 @@ const { routes } = require('./routes/routes');
 const NotFoundError = require('./errors/not-found-err');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/userController');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const cors = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 
@@ -19,6 +21,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(requestLogger);
+app.use(cors);
 app.use(express.json());
 app.post('/signin', express.json(), celebrate({
   body: Joi.object().keys({
@@ -39,6 +43,7 @@ app.post('/signup', express.json(), celebrate({
 }), createUser);
 app.use(auth);
 app.use(routes);
+app.use(errorLogger);
 app.use((req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
